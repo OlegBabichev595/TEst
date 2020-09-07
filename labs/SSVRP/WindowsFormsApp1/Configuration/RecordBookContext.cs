@@ -7,7 +7,7 @@ namespace Configuration
     public class RecordBookContext : DbContext
     {
         public string ConnectionString { get; set; } =
-            @"Data Source=MSQ-WSW-6950\SQLEXPRESS;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False";
+            @"Data Source=(localdb)\MSSQLLocalDB;Integrated Security=True";
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(ConnectionString);

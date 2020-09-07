@@ -17,14 +17,14 @@ namespace Configuration.Repositories
         }
 
 
-        private IQueryable<RecordBook> MakeInclusions() => _context.RecordBooks;
+        //private IQueryable<RecordBook> MakeInclusions() => _context.RecordBooks.Select(x=>x);
 
 
 
-        public RecordBook Get(int id) => MakeInclusions().SingleOrDefault(x => x.Id == id);
+        public RecordBook Get(int id) =>  new RecordBook();
 
 
         public IEnumerable<RecordBook> GetAll() =>
-            MakeInclusions().OrderBy(x => x.FirstName).ThenBy(x => x.LastName).AsQueryable();
+            _context.RecordBooks.Select(x => x).ToList();
     }
 }

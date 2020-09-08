@@ -41,8 +41,8 @@
             this.CourseTextBox = new System.Windows.Forms.TextBox();
             this.LastNameTextBox = new System.Windows.Forms.TextBox();
             this.FirstNameTextBox = new System.Windows.Forms.TextBox();
-            this.RecordBookList = new System.Windows.Forms.ListBox();
-            this.GroupListBox = new System.Windows.Forms.ListBox();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.listBox2 = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -130,9 +130,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(6, 130);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(101, 15);
+            this.label4.Size = new System.Drawing.Size(135, 15);
             this.label4.TabIndex = 3;
-            this.label4.Text = "Number of Group";
+            this.label4.Text = "Number of Record Book";
             // 
             // groupBox1
             // 
@@ -144,7 +144,7 @@
             this.groupBox1.Controls.Add(this.LastNameLabel);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.CourseLabel);
-            this.groupBox1.Location = new System.Drawing.Point(849, 12);
+            this.groupBox1.Location = new System.Drawing.Point(924, 24);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(283, 182);
             this.groupBox1.TabIndex = 4;
@@ -153,61 +153,57 @@
             // 
             // NumberOfGroupTextBox
             // 
-            this.NumberOfGroupTextBox.Location = new System.Drawing.Point(127, 126);
+            this.NumberOfGroupTextBox.Location = new System.Drawing.Point(161, 126);
             this.NumberOfGroupTextBox.Name = "NumberOfGroupTextBox";
             this.NumberOfGroupTextBox.Size = new System.Drawing.Size(100, 23);
             this.NumberOfGroupTextBox.TabIndex = 4;
             // 
             // CourseTextBox
             // 
-            this.CourseTextBox.Location = new System.Drawing.Point(127, 89);
+            this.CourseTextBox.Location = new System.Drawing.Point(161, 89);
             this.CourseTextBox.Name = "CourseTextBox";
             this.CourseTextBox.Size = new System.Drawing.Size(100, 23);
             this.CourseTextBox.TabIndex = 4;
             // 
             // LastNameTextBox
             // 
-            this.LastNameTextBox.Location = new System.Drawing.Point(127, 48);
+            this.LastNameTextBox.Location = new System.Drawing.Point(161, 48);
             this.LastNameTextBox.Name = "LastNameTextBox";
             this.LastNameTextBox.Size = new System.Drawing.Size(100, 23);
             this.LastNameTextBox.TabIndex = 4;
             // 
             // FirstNameTextBox
             // 
-            this.FirstNameTextBox.Location = new System.Drawing.Point(127, 16);
+            this.FirstNameTextBox.Location = new System.Drawing.Point(161, 16);
             this.FirstNameTextBox.Name = "FirstNameTextBox";
             this.FirstNameTextBox.Size = new System.Drawing.Size(100, 23);
             this.FirstNameTextBox.TabIndex = 4;
             // 
-            // RecordBookList
+            // listBox1
             // 
-            this.RecordBookList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.RecordBookList.FormattingEnabled = true;
-            this.RecordBookList.ItemHeight = 15;
-            this.RecordBookList.Location = new System.Drawing.Point(188, 12);
-            this.RecordBookList.Name = "RecordBookList";
-            this.RecordBookList.Size = new System.Drawing.Size(655, 409);
-            this.RecordBookList.TabIndex = 5;
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 15;
+            this.listBox1.Location = new System.Drawing.Point(12, 12);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(218, 394);
+            this.listBox1.TabIndex = 5;
             // 
-            // GroupListBox
+            // listBox2
             // 
-            this.GroupListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.GroupListBox.FormattingEnabled = true;
-            this.GroupListBox.ItemHeight = 15;
-            this.GroupListBox.Location = new System.Drawing.Point(12, 12);
-            this.GroupListBox.Name = "GroupListBox";
-            this.GroupListBox.Size = new System.Drawing.Size(156, 409);
-            this.GroupListBox.TabIndex = 5;
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.ItemHeight = 15;
+            this.listBox2.Location = new System.Drawing.Point(236, 12);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(663, 394);
+            this.listBox2.TabIndex = 6;
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1372, 479);
-            this.Controls.Add(this.GroupListBox);
-            this.Controls.Add(this.RecordBookList);
+            this.Controls.Add(this.listBox2);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.ApplyButton);
             this.Controls.Add(this.EditButton);
@@ -236,8 +232,8 @@
         private System.Windows.Forms.TextBox CourseTextBox;
         private System.Windows.Forms.TextBox LastNameTextBox;
         private System.Windows.Forms.TextBox FirstNameTextBox;
-        private System.Windows.Forms.ListBox RecordBookList;
-        private System.Windows.Forms.ListBox GroupListBox;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox listBox2;
     }
 }
 

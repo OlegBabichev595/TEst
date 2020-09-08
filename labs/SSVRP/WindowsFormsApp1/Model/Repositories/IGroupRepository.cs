@@ -1,7 +1,8 @@
-﻿namespace Model.Repositories
+﻿
+namespace Model.Repositories
 {
     public interface IGroupRepository: IRepository<Group, int>
     {
-        
+       
     }
 }

@@ -1,38 +1,56 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using Configuration;
+using Model;
 
 namespace WindowsFormsApp1
 {
-    public partial class Main : Form,IMainView
+    public partial class Main : Form, IMainView
     {
-
         private MainPresenter _mainPresenter;
+
         public Main()
         {
             InitializeComponent();
+            LockGUIElemnt();
+            EditButton.Click += EditButton_Click;
+            ApplyButton.Click += ApplyButton_Click;
+            DeleteButton.Click += DeleteButton_Click;
+            AddButton.Click += AddButton_Click;
         }
 
-        private void Form1_Load(object sender, System.EventArgs e)
+        private void AddButton_Click(object sender, EventArgs e)
         {
-            _mainPresenter = new MainPresenter(new UnitOfWork(), this);
-            _mainPresenter.GetAllGroup();
-
-
+            AddRecordBook?.Invoke(this,new EventArgs());
         }
 
-        public List<string> ListRecordView
+        private void DeleteButton_Click(object sender, EventArgs e)
         {
-            get => (List<string>) RecordBookList.DataSource;
-            set => RecordBookList.DataSource = value;
+           DeleteRecordBook?.Invoke(this,new SelectedItem(listBox2.SelectedItem as RecordBook));
         }
 
-        public List<string> ListGroupView
+        private void ApplyButton_Click(object sender, EventArgs e)
         {
-            get => (List<string>)GroupListBox.DataSource;
-            set => GroupListBox.DataSource = value;
+            LockGUIElemnt();
+            ApplyRecordBook?.Invoke(this, new SelectedItem(listBox2.SelectedItem as RecordBook));
+        }
+
+        private void EditButton_Click(object sender, EventArgs e)
+        {
+            UnLockGUIElemnt();
+        }
+
+        public List<RecordBook> ListRecordView
+        {
+            get => (List<RecordBook>) listBox2.DataSource;
+            set => listBox2.DataSource = value;
+        }
+
+        public List<Group> ListGroupView
+        {
+            get => (List<Group>) listBox1.DataSource;
+            set => listBox1.DataSource = value;
         }
 
         public string FirstName
@@ -60,9 +78,57 @@ namespace WindowsFormsApp1
         }
 
 
-        public event EventHandler DeleteRecordBook;
+        public void ShowMessage(string message)
+        {
+            MessageBox.Show(message);
+        }
+
+        public event EventHandler<SelectedItem> DeleteRecordBook;
         public event EventHandler AddRecordBook;
-        public event EventHandler EditRecordBook;
-        public event EventHandler ApplyRecordBook;
+      
+        public event EventHandler<SelectedItem> ApplyRecordBook;
+
+
+        public event EventHandler<SelectedEvent> SelectedForGroups;
+        public event EventHandler<SelectedItem> SelectedForRecordBooks;
+
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            _mainPresenter = new MainPresenter(new UnitOfWork(), this);
+            _mainPresenter.GetAllGroup();
+            listBox1.SelectedIndexChanged += GroupListBox_SelectedIndexChanged;
+            listBox2.SelectedIndexChanged += ListBox2_SelectedIndexChanged;
+        }
+
+        private void ListBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SelectedForRecordBooks?.Invoke(this, new SelectedItem(listBox2.SelectedItem as RecordBook));
+        }
+
+
+        private void GroupListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SelectedForGroups?.Invoke(this, new SelectedEvent(listBox1.SelectedIndex + 1));
+        }
+
+
+
+
+        public void LockGUIElemnt()
+        {
+            FirstNameTextBox.Enabled = false;
+            LastNameTextBox.Enabled = false;
+            CourseTextBox.Enabled = false;
+            NumberOfGroupTextBox.Enabled = false;
+        }
+
+        public void UnLockGUIElemnt()
+        {
+            FirstNameTextBox.Enabled = true;
+            LastNameTextBox.Enabled = true;
+            CourseTextBox.Enabled = true;
+            NumberOfGroupTextBox.Enabled = true;
+        }
     }
 }

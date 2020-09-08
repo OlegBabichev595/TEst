@@ -14,5 +14,11 @@ namespace Model
         {
             ListRecordBooks = new HashSet<RecordBook>();
         }
+
+
+        public override string ToString()
+        {
+            return $" Number of Group - {Number}";
+        }
     }
 }

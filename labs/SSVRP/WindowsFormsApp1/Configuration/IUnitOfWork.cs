@@ -5,7 +5,8 @@ namespace Configuration
 {
     public interface IUnitOfWork : IDisposable
     {
-        IRecordBookRepository UserRepository { get; }
+        IRecordBookRepository RecordBookRepository { get; }
+        IGroupRepository GroupRepository { get; }
 
         void Commit();
     }

@@ -8,10 +8,13 @@ namespace Configuration
     {
         private RecordBookContext _context;
         private IRecordBookRepository _recordBookRepository;
+        private IGroupRepository _groupRepository;
 
         private RecordBookContext Context => _context ??= new RecordBookContext();
 
-        public IRecordBookRepository UserRepository => _recordBookRepository ??= new RecordBookRepository(Context);
+        public IRecordBookRepository RecordBookRepository => _recordBookRepository ??= new RecordBookRepository(Context);
+
+        public IGroupRepository GroupRepository => _groupRepository ??= new GroupRepository(Context);
         public void Commit()
         {
             if (_isDisposed)

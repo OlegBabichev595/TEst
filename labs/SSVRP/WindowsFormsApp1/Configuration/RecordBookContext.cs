@@ -7,7 +7,7 @@ namespace Configuration
     public class RecordBookContext : DbContext
     {
         public string ConnectionString { get; set; } =
-            @"Data Source=(localdb)\MSSQLLocalDB;Integrated Security=True";
+            @"Server=(localdb)\MSSQLLocalDB;Database=Local;Integrated Security=True";
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(ConnectionString);

@@ -10,11 +10,11 @@ namespace Configuration.Configuration
         {
             builder.ToTable(nameof(RecordBook));
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.NumberOfRecordBook).HasColumnType("int").IsRequired();
-            builder.Property(x => x.FirstName).HasColumnType("nvarchar(30)").IsRequired().HasMaxLength(30);
-            builder.Property(x => x.LastName).HasColumnType("nvarchar(30)").IsRequired().HasMaxLength(30);
-            builder.Property(x => x.Course).HasColumnType("int").IsRequired();
-            builder.HasOne(x => x.Group).WithMany(x => x.ListRecordBooks);
+            builder.Property(x => x.NumberOfRecordBook).IsRequired();
+            builder.Property(x => x.FirstName).IsRequired().HasMaxLength(30);
+            builder.Property(x => x.LastName).IsRequired().HasMaxLength(30);
+            builder.Property(x => x.Course).IsRequired();
+            builder.HasOne(x => x.Group).WithMany(x => x.ListRecordBooks).HasForeignKey(x=>x.GroupId);
         }
     }
 }

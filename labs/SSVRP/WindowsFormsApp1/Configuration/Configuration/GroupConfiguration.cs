@@ -10,7 +10,7 @@ namespace Configuration.Configuration
         {
             builder.ToTable(nameof(Group));
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.Number).HasColumnType("int").HasColumnName("Number").IsRequired();
+            builder.Property(x => x.Number).IsRequired();
         }
     }
 }

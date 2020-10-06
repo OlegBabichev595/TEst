@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO.MemoryMappedFiles;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
 using System.Windows.Forms;
 
 namespace FirstWin
@@ -22,22 +25,56 @@ namespace FirstWin
         {
             var userName = textBox1.Text;
             var password = textBox2.Text;
-            var size1 = (textBox1.Text.Length);
-            var size2= (textBox2.Text.Length);
-            var sharedMemory = MemoryMappedFile.CreateOrOpen("MemoryFile", (size1 + size2) * 2 + 8);
-            
-            using (var writer = sharedMemory.CreateViewAccessor(0, (size1 + size2) * 2 + 4))
+            SendMessageFromSocket(11000,userName + password);
+
+
+        }
+        static void SendMessageFromSocket(int port,string message)
+        {
+            // Буфер для входящих данных
+            byte[] bytes = new byte[1024];
+
+            // Соединяемся с удаленным устройством
+
+            // Устанавливаем удаленную точку для сокета
+            IPHostEntry ipHost = Dns.GetHostEntry("localhost");
+            IPAddress ipAddr = ipHost.AddressList[0];
+            IPEndPoint ipEndPoint = new IPEndPoint(ipAddr, port);
+
+            Socket sender = new Socket(ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+
+            // Соединяем сокет с удаленной точкой
+            sender.Connect(ipEndPoint);
+
+            Console.Write("Entry message: ");
+            string userName = "Oleg";
+
+
+            byte[] msg = Encoding.UTF8.GetBytes(message);
+
+
+            int bytesSent = sender.Send(msg);
+
+            // Получаем ответ от сервера
+            int bytesRec = sender.Receive(bytes);
+
+
+            var s = Encoding.UTF8.GetString(bytes, 0, bytesRec);
+            if (s.Equals("true"))
             {
-               
-                writer.Write(0, size1);
-                writer.Write(4, size2);
-          
-                writer.WriteArray<char>(8, userName.ToCharArray(), 0, userName.Length);
+                MessageBox.Show(s);
+            }
+         
+            // Используем рекурсию для неоднократного вызова SendMessageFromSocket()
+            if (s == "error")
+            {
+                SendMessageFromSocket(port, message);
             }
 
-            Process.Start(@"D:\ГАВНО\TEst\labs\FirstWin\SecondWin\bin\Debug\netcoreapp3.1/SecondWin.exe");
-            this.Hide();
-            
+            // Освобождаем сокет
+            sender.Shutdown(SocketShutdown.Both);
+            sender.Close();
         }
     }
 }
+

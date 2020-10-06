@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Lab5.Shapes;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace LAb5
 {
@@ -25,8 +28,10 @@ namespace LAb5
 
         private void PictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
-            DrawStar(e);
-            DrawSmileFace(e);
+            if (Star.Checked)
+                DrawStar(e);
+            else
+                DrawSmileFace(e);
         }
 
         public void DrawStar(MouseEventArgs e)
@@ -62,16 +67,18 @@ namespace LAb5
 
             var so = new SolidBrush(Color.Black);
 
-            g.DrawEllipse(Pens.Blue, points.Item4.X, points.Item4.Y, IDrawSmileFace.FaceSizeWidth, IDrawSmileFace.FaceSizeWidth);
+            g.DrawEllipse(Pens.Blue, points.Item4.X, points.Item4.Y, IDrawSmileFace.FaceSizeWidth,
+                IDrawSmileFace.FaceSizeWidth);
             g.FillEllipse(so, points.Item1.X, points.Item1.Y, IDrawSmileFace.EyeSizeWidth, IDrawSmileFace.EyeSizeWidth);
             g.FillEllipse(so, points.Item2.X, points.Item2.Y, IDrawSmileFace.EyeSizeWidth, IDrawSmileFace.EyeSizeWidth);
-            g.DrawArc(Pens.Blue, points.Item3.X, points.Item3.Y, IDrawSmileFace.FaceSizeWidth, IDrawSmileFace.FaceSizeWidth,
+            g.DrawArc(Pens.Blue, points.Item3.X, points.Item3.Y, IDrawSmileFace.FaceSizeWidth,
+                IDrawSmileFace.FaceSizeWidth,
                 IDrawSmileFace.SmileDegree, IDrawSmileFace.SmileDegreeSecond);
             shapes.Add(s);
         }
 
 
-        private bool CheckCoordinatesDrawWindowForStar(IDrawStar star,int delta)
+        private bool CheckCoordinatesDrawWindowForStar(IDrawStar star, int delta)
         {
             foreach (var point in star.Points)
             {
@@ -84,12 +91,13 @@ namespace LAb5
             return true;
         }
 
-        private bool CheckCoordinatesDrawWindowForSmileFace(IDrawSmileFace smileFace,int delta)
+        private bool CheckCoordinatesDrawWindowForSmileFace(IDrawSmileFace smileFace, int delta)
         {
-            return !(smileFace.FacePoint.X + IDrawSmileFace.FaceSizeWidth + delta > pictureBox1.Width) && !(smileFace.FacePoint.X < 0) && !(smileFace.FacePoint.Y+ IDrawSmileFace.FaceSizeWidth> pictureBox1.Height) && !(smileFace.FacePoint.Y < 0);
+            return !(smileFace.FacePoint.X + IDrawSmileFace.FaceSizeWidth + delta > pictureBox1.Width) &&
+                   !(smileFace.FacePoint.X < 0) &&
+                   !(smileFace.FacePoint.Y + IDrawSmileFace.FaceSizeWidth > pictureBox1.Height) &&
+                   !(smileFace.FacePoint.Y < 0);
         }
-
-
 
 
         private void button1_Click(object sender, EventArgs e)
@@ -133,10 +141,7 @@ namespace LAb5
 
         public void DrawLeft(int delta, IEnumerable<IShape> shapes)
         {
-            if (shapes == null)
-            {
-                return;
-            }
+            if (shapes == null) return;
 
 
             foreach (var shape in shapes)
@@ -145,35 +150,27 @@ namespace LAb5
                     case IDrawStar star:
 
                         for (var i = 0; i < star.Points.Count; i++)
-                        {
                             if (CheckCoordinatesDrawWindowForStar(star, delta))
-                            {
                                 star.Points[i] = new PointF(star.Points[i].X - delta, star.Points[i].Y);
-
-                            }
-                        }
-
 
 
                         break;
                     case IDrawSmileFace smile:
-                        if (CheckCoordinatesDrawWindowForSmileFace(smile,-delta))
+                        if (CheckCoordinatesDrawWindowForSmileFace(smile, -delta))
                         {
                             smile.SecondEyePoint = new PointF(smile.SecondEyePoint.X - delta, smile.SecondEyePoint.Y);
                             smile.FirstEyePoint = new PointF(smile.FirstEyePoint.X - delta, smile.FirstEyePoint.Y);
                             smile.FacePoint = new PointF(smile.FacePoint.X - delta, smile.FacePoint.Y);
                             smile.SmilePoint = new PointF(smile.SmilePoint.X - delta, smile.SmilePoint.Y);
                         }
+
                         break;
                 }
         }
 
         public void DrawRight(int delta, IEnumerable<IShape> shapes)
         {
-            if (shapes == null)
-            {
-                return;
-            }
+            if (shapes == null) return;
 
             foreach (var shape in shapes)
                 switch (shape)
@@ -181,10 +178,8 @@ namespace LAb5
                     case IDrawStar star:
                         for (var i = 0; i < star.Points.Count; i++)
                             if (CheckCoordinatesDrawWindowForStar(star, delta))
-                            {
                                 star.Points[i] = new PointF(star.Points[i].X + delta, star.Points[i].Y);
-                            }
-                           
+
                         break;
                     case IDrawSmileFace smile:
                         if (CheckCoordinatesDrawWindowForSmileFace(smile, -delta))
@@ -202,10 +197,7 @@ namespace LAb5
 
         public void DrawBottom(int delta, IEnumerable<IShape> shapes)
         {
-            if (shapes == null)
-            {
-                return;
-            }
+            if (shapes == null) return;
 
             foreach (var shape in shapes)
                 switch (shape)
@@ -213,10 +205,8 @@ namespace LAb5
                     case IDrawStar star:
                         for (var i = 0; i < star.Points.Count; i++)
                             if (CheckCoordinatesDrawWindowForStar(star, delta))
-                            {
                                 star.Points[i] = new PointF(star.Points[i].X, star.Points[i].Y + delta);
-                            }
-                       
+
                         break;
                     case IDrawSmileFace smile:
                         if (CheckCoordinatesDrawWindowForSmileFace(smile, delta))
@@ -233,10 +223,7 @@ namespace LAb5
 
         public void DrawTop(int delta, IEnumerable<IShape> shapes)
         {
-            if (shapes == null)
-            {
-                return;
-            }
+            if (shapes == null) return;
 
             foreach (var shape in shapes)
                 switch (shape)
@@ -244,11 +231,9 @@ namespace LAb5
                     case IDrawStar star:
                         for (var i = 0; i < star.Points.Count; i++)
                             if (CheckCoordinatesDrawWindowForStar(star, -delta))
-                            {
                                 star.Points[i] = new PointF(star.Points[i].X, star.Points[i].Y - delta);
-                            }
 
-                       
+
                         break;
                     case IDrawSmileFace smile:
                         if (CheckCoordinatesDrawWindowForSmileFace(smile, -delta))
@@ -258,7 +243,7 @@ namespace LAb5
                             smile.FacePoint = new PointF(smile.FacePoint.X, smile.FacePoint.Y - delta);
                             smile.SmilePoint = new PointF(smile.SmilePoint.X, smile.SmilePoint.Y - delta);
                         }
-                       
+
                         break;
                 }
         }
@@ -315,6 +300,51 @@ namespace LAb5
         private void button8_Click(object sender, EventArgs e)
         {
             DrawTop(5, shapes);
+            ReDraw(shapes);
+        }
+
+        private void SaveFile_Click(object sender, EventArgs e)
+        {
+            var saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "Json files(*.json)|*.json";
+            if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
+                return;
+            var filename = saveFileDialog1.FileName;
+
+            var json = new JsonSerializer();
+            json.Converters.Add(new JavaScriptDateTimeConverter());
+            json.Converters.Add(new JavaScriptDateTimeConverter());
+            json.NullValueHandling = NullValueHandling.Ignore;
+            json.TypeNameHandling = TypeNameHandling.Auto;
+            json.Formatting = Formatting.Indented;
+            
+                using var sw = new StreamWriter(filename);
+                using var writer = new JsonTextWriter(sw);
+                json.Serialize(writer, shapes, typeof(IShape));
+            
+
+            MessageBox.Show("Файл сохранен");
+        }
+
+        private void OpenFIleButton_Click(object sender, EventArgs e)
+        {
+            var serializer = new JsonSerializer();
+            serializer.Converters.Add(new JavaScriptDateTimeConverter());
+            serializer.NullValueHandling = NullValueHandling.Ignore;
+            var openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Json files(*.json)|*.json";
+            if (openFileDialog.ShowDialog() == DialogResult.Cancel)
+                return;
+            var filename = openFileDialog.FileName;
+            using var stream = new StreamReader(filename);
+
+            var jsons = JsonConvert.DeserializeObject<List<IShape>>(File.ReadAllText(filename),
+                new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.Auto,
+                    NullValueHandling = NullValueHandling.Ignore
+                });
+            shapes = new List<IShape>(jsons);
             ReDraw(shapes);
         }
     }

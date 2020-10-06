@@ -37,13 +37,15 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
+            this.SaveFile = new System.Windows.Forms.Button();
+            this.OpenFIleButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(12, 62);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(431, 376);
             this.pictureBox1.TabIndex = 0;
@@ -132,11 +134,33 @@
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
+            // SaveFile
+            // 
+            this.SaveFile.Location = new System.Drawing.Point(12, 3);
+            this.SaveFile.Name = "SaveFile";
+            this.SaveFile.Size = new System.Drawing.Size(77, 36);
+            this.SaveFile.TabIndex = 8;
+            this.SaveFile.Text = "SaveFile";
+            this.SaveFile.UseVisualStyleBackColor = true;
+            this.SaveFile.Click += new System.EventHandler(this.SaveFile_Click);
+            // 
+            // OpenFIleButton
+            // 
+            this.OpenFIleButton.Location = new System.Drawing.Point(95, 3);
+            this.OpenFIleButton.Name = "OpenFIleButton";
+            this.OpenFIleButton.Size = new System.Drawing.Size(75, 36);
+            this.OpenFIleButton.TabIndex = 9;
+            this.OpenFIleButton.Text = "OpenFile";
+            this.OpenFIleButton.UseVisualStyleBackColor = true;
+            this.OpenFIleButton.Click += new System.EventHandler(this.OpenFIleButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.OpenFIleButton);
+            this.Controls.Add(this.SaveFile);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button3);
@@ -165,6 +189,8 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button SaveFile;
+        private System.Windows.Forms.Button OpenFIleButton;
     }
 }
 

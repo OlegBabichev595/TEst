@@ -15,7 +15,6 @@ namespace LAb5
     {
         private readonly Graphics g;
         private List<IShape> shapes;
-
         public Form1()
         {
             InitializeComponent();

@@ -1,0 +1,57 @@
+﻿@model Book
+
+@{
+    ViewBag.Title = "Book details";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3>Book details</h3>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th>Title</th>
+                <td>@Model.Title</td>
+            </tr>
+            <tr>
+                <th>Cover</th>
+                <td>
+                    <img width="400" src="@Model.CoverUrl" alt="cover"/>
+                </td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>@Html.Raw(Model.Description)</td>
+            </tr>
+            <tr>
+                <th>Publisher</th>
+                <td>@Model.Publisher</td>
+            </tr>
+            <tr>
+                <th>Publishing Date</th>
+                <td>@Model.GetPublishingDateString()</td>
+            </tr>
+            <tr>
+                <th>Rating</th>
+                <td>@Model.GetRatingString()</td>
+            </tr>
+            @if (Model.BookAuthor.Count > 0)
+            {
+                <tr>
+                    <th>Author(s)</th>
+                    <td>
+                        @foreach (var bookAuthor in Model.BookAuthor)
+                        {
+                            <a asp-controller="Author" asp-action="Details" asp-route-id="@bookAuthor.AuthorId">@bookAuthor.Author.ToString()</a>
+                            <br/>
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="card-footer">
+        <a asp-action="List" class="btn btn-secondary">List of books</a>
+    </div>
+</div>
